@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MOAAZ STORE | Product Management</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== Toast ===== -->
+<div id="toast" class="toast"></div>
+
+<!-- ===== Login Screen ===== -->
+<div id="loginScreen" class="login-screen">
+    <div class="login-card">
+        <div class="login-logo">🛒</div>
+        <h1 class="login-title">MOAAZ STORE</h1>
+        <p class="login-sub">Sign in to manage your products</p>
+
+        <div id="errorBox" class="error-box"></div>
+
+        <form onsubmit="return false;">
+            <div class="field">
+                <label>Username</label>
+                <div class="input-wrap">
+                    <input id="username" type="text" placeholder="Enter username" autocomplete="username">
+                    <span class="icon">👤</span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Password</label>
+                <div class="input-wrap">
+                    <input id="password" type="password" placeholder="Enter password" autocomplete="current-password">
+                    <span class="icon">🔒</span>
+                    <button type="button" class="toggle-pass" id="togglePass" onclick="togglePassword()">👁️</button>
+                </div>
+            </div>
+
+            <label class="remember">
+                <input type="checkbox" id="remember"> Remember me
+            </label>
+
+            <button type="button" id="loginBtn" class="btn-primary login-btn" onclick="login()">
+                <span id="loginBtnText">Sign In</span>
+                <span id="loginSpinner" class="spinner"></span>
+            </button>
+        </form>
+
+        <p class="login-foot">© All rights reserved by Ahmed Elmaaz</p>
+    </div>
+</div>
+
+<!-- ===== App ===== -->
+<div class="app" id="app" style="display:none;">
+
+    <div class="topbar">
+        <div class="brand">
+            <div class="brand-icon">🛒</div>
+            <div>
+                <h1>MOAAZ STORE</h1>
+                <p>Product Management</p>
+            </div>
+        </div>
+
+        <div class="topbar-actions">
+            <div class="user-chip">👤 <span id="userNameLabel"></span></div>
+            <button class="icon-btn" onclick="toggleMode()" id="modeBtn">🌙</button>
+            <button class="icon-btn danger" onclick="logout()" title="Logout">🚪</button>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#3b82f622;color:#3b82f6;">📦</div>
+            <div>
+                <p class="stat-label">Total Products</p>
+                <h3 id="statCount">0</h3>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#10b98122;color:#10b981;">💰</div>
+            <div>
+                <p class="stat-label">Inventory Value</p>
+                <h3 id="statValue">0</h3>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background:#f59e0b22;color:#f59e0b;">🏷️</div>
+            <div>
+                <p class="stat-label">Categories</p>
+                <h3 id="statCategories">0</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title" id="formTitle">➕ Add New Product</div>
+
+        <div class="inputs-grid">
+            <div class="field">
+                <label>Product Name</label>
+                <input id="title" placeholder="e.g. Wireless Headphones">
+            </div>
+            <div class="field">
+                <label>Category</label>
+                <input id="category" placeholder="e.g. Electronics">
+            </div>
+            <div class="field">
+                <label>Quantity</label>
+                <input id="count" type="number" placeholder="1" min="1">
+            </div>
+        </div>
+
+        <div class="price-grid">
+            <div class="field">
+                <label>Price</label>
+                <input id="price" type="number" placeholder="0" oninput="getTotal()">
+            </div>
+            <div class="field">
+                <label>Taxes</label>
+                <input id="taxes" type="number" placeholder="0" oninput="getTotal()">
+            </div>
+            <div class="field">
+                <label>Ads</label>
+                <input id="ads" type="number" placeholder="0" oninput="getTotal()">
+            </div>
+            <div class="field">
+                <label>Discount</label>
+                <input id="discount" type="number" placeholder="0" oninput="getTotal()">
+            </div>
+            <div class="field total-field">
+                <label>Total</label>
+                <div id="total" class="total-pill">0</div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button id="submit" class="btn-primary" onclick="submitForm()">Create Product</button>
+            <button id="cancelEdit" class="btn-secondary" onclick="cancelEditMode()" style="display:none;">Cancel</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title-row">
+            <div class="card-title">📋 Products List</div>
+            <div id="deleteAll"></div>
+        </div>
+
+        <div class="search-row">
+            <div class="input-wrap search-wrap">
+                <input id="search" placeholder="Search products..." oninput="searchData(this.value)">
+                <span class="icon">🔍</span>
+            </div>
+            <div class="searchBtns">
+                <button class="chip active" id="modeTitle" onclick="getSearchMood('title')">Title</button>
+                <button class="chip" id="modeCategory" onclick="getSearchMood('category')">Category</button>
+            </div>
+        </div>
+
+        <div id="loadingRow" class="loading-row" style="display:none;">
+            <span class="spinner dark"></span> Loading products from Google Sheet...
+        </div>
+
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+            <div id="emptyState" class="empty-state" style="display:none;">
+                <div class="empty-icon">📭</div>
+                <p>No products yet. Add your first product above.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
