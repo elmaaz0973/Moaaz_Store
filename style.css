@@ -402,3 +402,93 @@ tbody tr:hover{ background: rgba(59,130,246,0.06); }
 @media (max-width:640px){
     .form-actions .btn-primary, .form-actions .btn-secondary{ flex: 1 1 100%; }
 }
+
+/* ===== MOBILE FIXES ===== */
+
+/* Topbar على الموبايل */
+@media (max-width: 768px) {
+    .app { padding: 14px 12px 50px; }
+
+    .topbar {
+        padding: 12px 14px;
+        gap: 10px;
+        border-radius: 14px;
+    }
+
+    .brand h1 { font-size: 15px; }
+    .brand p  { font-size: 11px; }
+    .brand-icon { width: 40px; height: 40px; font-size: 20px; border-radius: 11px; }
+
+    .topbar-actions { gap: 7px; }
+
+    .user-chip { padding: 6px 10px; font-size: 12px; }
+
+    /* Stats كارد */
+    .stats { grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .stat-card { padding: 13px 14px; gap: 10px; border-radius: 13px; }
+    .stat-icon { width: 38px; height: 38px; font-size: 18px; border-radius: 10px; }
+    .stat-card h3 { font-size: 17px; }
+    .stat-label { font-size: 11px; }
+
+    /* Card عام */
+    .card { padding: 16px 14px; margin-bottom: 14px; border-radius: 14px; }
+    .card-title { font-size: 14px; margin-bottom: 14px; }
+    .card-title-row { margin-bottom: 12px; }
+
+    /* Form inputs */
+    .inputs-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .price-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    /* الـ Total يأخذ سطر كامل */
+    .total-field { grid-column: 1 / -1; }
+
+    .field label { font-size: 12px; margin-bottom: 4px; }
+    input { font-size: 13px; padding: 10px 12px; }
+
+    /* أزرار الـ Form */
+    .form-actions { gap: 8px; }
+    .form-actions .btn-primary,
+    .form-actions .btn-secondary { flex: 1 1 100%; padding: 11px 16px; font-size: 14px; }
+
+    /* Search */
+    .search-row { gap: 8px; flex-wrap: wrap; }
+    .search-wrap { min-width: 100%; }
+    .searchBtns { width: 100%; }
+    .chip { flex: 1; text-align: center; padding: 9px 10px; font-size: 12.5px; }
+
+    /* الجدول على الموبايل */
+    table { min-width: 500px; font-size: 12.5px; }
+
+    th { padding: 9px 6px; font-size: 11px; }
+    td { padding: 9px 6px; font-size: 12px; }
+
+    .row-actions button { width: 28px; height: 28px; font-size: 12px; border-radius: 6px; }
+
+    .delete-all-btn { padding: 7px 12px; font-size: 12px; }
+
+    /* Login */
+    .login-card { padding: 28px 20px; }
+    .login-logo { width: 60px; height: 60px; font-size: 28px; border-radius: 15px; }
+    .login-title { font-size: 19px; }
+
+    /* Toast */
+    .toast { font-size: 13px; padding: 11px 18px; max-width: 90vw; }
+}
+
+/* شاشات أصغر من 400px */
+@media (max-width: 400px) {
+    .stats { grid-template-columns: 1fr; }
+    .price-grid { grid-template-columns: 1fr; }
+    .topbar { flex-direction: column; align-items: flex-start; }
+    .topbar-actions { width: 100%; justify-content: flex-end; }
+    table { min-width: 420px; }
+}
